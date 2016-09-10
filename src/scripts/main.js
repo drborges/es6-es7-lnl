@@ -9,7 +9,8 @@ var bespoke = require('bespoke'),
   hash = require('bespoke-hash'),
   progress = require('bespoke-progress'),
   forms = require('bespoke-forms'),
-  prismRefresher = require('./bespoke-prism-refresher')
+  prismRefresher = require('./bespoke-prism-refresher'),
+  babelTranspiler = require('./bespoke-babel-transpiler')
 
 // Bespoke.js
 bespoke.from('article', [
@@ -23,6 +24,7 @@ bespoke.from('article', [
   progress(),
   forms(),
   prismRefresher(),
+  babelTranspiler(),
 ]);
 
 // Prism syntax highlighting
