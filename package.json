@@ -2,7 +2,9 @@
   "name": "presentation-es6-es7-awesomeness",
   "version": "0.0.0",
   "dependencies": {
-    "bespoke-theme-voltaire": "^1.0.1"
+    "bespoke-theme-voltaire": "^1.0.1",
+    "gulp": "^3.9.1",
+    "js-beautify": "^1.6.4"
   },
   "devDependencies": {
     "bespoke": "^1.0.0",
