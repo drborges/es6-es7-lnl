@@ -13,6 +13,15 @@ html
 
       section
         h1 ES6 + ES7 = Awesomeness
+        
+      section
+        h2 Live Example
+        div.transpiler
+          pre.source
+            code(contenteditable="true" class="language-javascript").
+              let closure = (a, b) => a + b 
+          pre.target
+            code(contenteditable="true" class="language-javascript")
 
       section
         h2 Keyboard Interaction
