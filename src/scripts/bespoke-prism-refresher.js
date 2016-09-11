@@ -9,7 +9,7 @@ function prettify(code) {
 
 module.exports = function prismRefresher() {
   return function() {
-    var codeBlocks = document.querySelectorAll('pre code[contenteditable=true]')
+    var codeBlocks = document.querySelectorAll('pre code')
 
     for (var i = 0; i < codeBlocks.length; ++i) {
       var codeBlock = codeBlocks[i]

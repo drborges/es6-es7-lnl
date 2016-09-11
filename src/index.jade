@@ -23,7 +23,9 @@ html
             code(contenteditable="true" class="language-javascript").
               let closure = (a, b) => a + b 
           pre.target
-            code(contenteditable="true" class="language-javascript")
+            code.language-javascript.
+          pre.output
+            code.language-bash.
 
       section
         h2 Babel REPL
@@ -47,7 +49,7 @@ html
               }
               let json = fetchGithubOrgs().then((json) => console.log(json))
           pre.target
-            code(contenteditable="true" class="language-javascript")
+            code.language-javascript.
           pre.output
             code.language-bash.
 

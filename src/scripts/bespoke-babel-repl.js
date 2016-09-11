@@ -37,8 +37,8 @@ module.exports = function(options) {
     var repls = document.querySelectorAll('.repl')
     for (var i = 0; i < repls.length; ++i) {
       var repl = repls[i]
-      var source = repl.querySelector('pre.source code[contenteditable=true]')
-      var target = repl.querySelector('pre.target code[contenteditable=true]')
+      var source = repl.querySelector('pre.source code')
+      var target = repl.querySelector('pre.target code')
       var output = repl.querySelector('pre.output code')
 
       window.addEventListener('load', transpileAndEvaluate(source, target, output, exceptionHandler))
