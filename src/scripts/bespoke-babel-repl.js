@@ -1,4 +1,6 @@
-var babel = require("babel-core");
+require("babel-polyfill")
+var babel = require("babel-core")
+
 var options = {
   presets: [
     require("babel-preset-es2015"),
@@ -11,11 +13,19 @@ var options = {
   ]
 }
 
-function eventListener(source, target, exceptionHandler) {
+function transpileAndEvaluate(source, target, output, exceptionHandler) {
   return function(event) {
     exceptionHandler(function() {
-      target.textContent = babel.transform(source.textContent, options).code
-      target.dispatchEvent(new Event('blur'))
+      var transpiledCode = babel.transform(source.textContent, options).code
+
+      if (target) {
+        target.textContent = transpiledCode
+        target.dispatchEvent(new Event('blur'))
+      }
+
+      if (output) {
+        output.textContent = "> " + eval(transpiledCode.replace('use strict', ''))
+      }
     })
   }
 }
@@ -28,9 +38,10 @@ module.exports = function(options) {
     repls.forEach(function(repl) {
       var source = repl.querySelector('pre.source code[contenteditable=true]')
       var target = repl.querySelector('pre.target code[contenteditable=true]')
+      var output = repl.querySelector('pre.output code')
 
-      window.addEventListener('load', eventListener(source, target, exceptionHandler))
-      source.addEventListener('blur', eventListener(source, target, exceptionHandler))
+      window.addEventListener('load', transpileAndEvaluate(source, target, output, exceptionHandler))
+      source.addEventListener('blur', transpileAndEvaluate(source, target, output, exceptionHandler))
     })
   }
 }

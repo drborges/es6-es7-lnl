@@ -17,21 +17,37 @@ html
         h1 ES6 + ES7 = Awesomeness
         
       section
-        h2 Babel to the Rescue
+        h2 Babel Transpiler
         div.repl
           pre.source
             code(contenteditable="true" class="language-javascript").
               let closure = (a, b) => a + b 
           pre.target
             code(contenteditable="true" class="language-javascript")
-            
+
       section
-        h2 Babel to the Rescue
+        h2 Babel REPL
         div.repl
           pre.source
             code(contenteditable="true" class="language-javascript").
               let hello = (name) => `Hello ${name}`
               hello('World')
+          pre.output
+            code.language-bash.
+
+      section
+        h2 Babel Transpiler
+        div.repl
+          pre.source
+            code(contenteditable="true" class="language-javascript").
+              async function fetchGithubOrgs() {
+                let resp = await fetch('https://api.github.com/users/octocat/orgs')
+                let json = await resp.json()
+                return json
+              }
+              let json = fetchGithubOrgs().then((json) => console.log(json))
+          pre.target
+            code(contenteditable="true" class="language-javascript")
           pre.output
             code.language-bash.
 
