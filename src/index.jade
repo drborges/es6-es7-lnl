@@ -17,13 +17,23 @@ html
         h1 ES6 + ES7 = Awesomeness
         
       section
-        h2 Live Example
-        div.transpiler
+        h2 Babel to the Rescue
+        div.repl
           pre.source
             code(contenteditable="true" class="language-javascript").
               let closure = (a, b) => a + b 
           pre.target
             code(contenteditable="true" class="language-javascript")
+            
+      section
+        h2 Babel to the Rescue
+        div.repl
+          pre.source
+            code(contenteditable="true" class="language-javascript").
+              let hello = (name) => `Hello ${name}`
+              hello('World')
+          pre.output
+            code.language-bash.
 
       section
         h2 Keyboard Interaction

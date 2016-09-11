@@ -10,7 +10,7 @@ var bespoke = require('bespoke'),
   progress = require('bespoke-progress'),
   forms = require('bespoke-forms'),
   prismRefresher = require('./bespoke-prism-refresher'),
-  babelTranspiler = require('./bespoke-babel-transpiler'),
+  babelRepl = require('./bespoke-babel-repl'),
   snackbar = require('./bespoke-snackbar')({ snackbarSelector: '.snackbar' })
 
 // Bespoke.js
@@ -25,7 +25,7 @@ bespoke.from('article', [
   progress(),
   forms(),
   prismRefresher(),
-  babelTranspiler({ exceptionHandler: snackbar.exceptionHandler }),
+  babelRepl({ exceptionHandler: snackbar.exceptionHandler }),
   snackbar(),
 ]);
 
