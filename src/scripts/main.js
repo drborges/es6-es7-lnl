@@ -11,7 +11,8 @@ var bespoke = require('bespoke'),
   forms = require('bespoke-forms'),
   prismRefresher = require('./bespoke-prism-refresher'),
   babelRepl = require('./bespoke-babel-repl'),
-  snackbar = require('./bespoke-snackbar')({ snackbarSelector: '.snackbar' })
+  snackbar = require('./bespoke-snackbar')({ snackbarSelector: '.snackbar' }),
+  remoteSync = require('./bespoke-remote-sync')
 
 // Bespoke.js
 bespoke.from('article', [
@@ -27,6 +28,10 @@ bespoke.from('article', [
   prismRefresher(),
   babelRepl({ exceptionHandler: snackbar.exceptionHandler }),
   snackbar(),
+  remoteSync({
+    projectId: 'es6-es7-lnl',
+    apiKey: 'AIzaSyAvasEA1mR0f2s6mmoH-0bdwZfH3fw4m0M',
+  }),
 ]);
 
 // Prism syntax highlighting
