@@ -8,25 +8,26 @@ var options = {
   ]
 }
 
-function transpile(source, target) {
-  target.textContent = babel.transform(source.textContent, options).code
-  target.dispatchEvent(new Event('blur'))
+function traspileEventListener(source, target, exceptionHandler) {
+  return function(event) {
+    exceptionHandler(function() {
+      target.textContent = babel.transform(source.textContent, options).code
+      target.dispatchEvent(new Event('blur'))
+    })
+  }
 }
 
-module.exports = function() {
+module.exports = function(options) {
+  var exceptionHandler = options.exceptionHandler || function(fn) { fn() }
+
   return function() {
     var transpilers = document.querySelectorAll('.transpiler')
     transpilers.forEach(function(transpiler) {
       var source = transpiler.querySelector('pre.source code[contenteditable=true]')
       var target = transpiler.querySelector('pre.target code[contenteditable=true]')
 
-      window.addEventListener('load', function(event) {
-        transpile(source, target)
-      })
-
-      source.addEventListener('blur', function(event) {
-        transpile(source, target)
-      })
+      window.addEventListener('load', traspileEventListener(source, target, exceptionHandler))
+      source.addEventListener('blur', traspileEventListener(source, target, exceptionHandler))
     })
   }
 }

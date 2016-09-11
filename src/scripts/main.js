@@ -10,7 +10,8 @@ var bespoke = require('bespoke'),
   progress = require('bespoke-progress'),
   forms = require('bespoke-forms'),
   prismRefresher = require('./bespoke-prism-refresher'),
-  babelTranspiler = require('./bespoke-babel-transpiler')
+  babelTranspiler = require('./bespoke-babel-transpiler'),
+  snackbar = require('./bespoke-snackbar')({ snackbarSelector: '.snackbar' })
 
 // Bespoke.js
 bespoke.from('article', [
@@ -24,7 +25,8 @@ bespoke.from('article', [
   progress(),
   forms(),
   prismRefresher(),
-  babelTranspiler(),
+  babelTranspiler({ exceptionHandler: snackbar.exceptionHandler }),
+  snackbar(),
 ]);
 
 // Prism syntax highlighting

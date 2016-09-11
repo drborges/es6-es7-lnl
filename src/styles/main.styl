@@ -13,6 +13,7 @@ pre
   font-size: 12px
   flex-grow: 1
   height: 100%
+  max-width: 400px
   max-height: 300px
 
 .transpiler
@@ -20,3 +21,19 @@ pre
 
 code:focus
   outline: none
+
+.snackbar
+  position: absolute
+  width: 100%
+  top: 0
+  padding: 30px 0 10px 0
+  z-index: 1
+  color: #fff
+  text-align: center
+  background-color: #f30
+  box-shadow: 0px 2px 5px #f30
+  -webkit-transition: top 0.5s;
+
+
+.snackbar.hidden
+  top: -100px
