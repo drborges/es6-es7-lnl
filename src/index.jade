@@ -20,8 +20,8 @@ html
         h2 Babel Transpiler
         div.repl
           pre.source
-            code(contenteditable="true" class="language-javascript").
-              let closure = (a, b) => a + b 
+            code(id="firebase-code-1" contenteditable="true" class="language-javascript firebase-element").
+              let closure = (a, b) => a + b
           pre.target
             code.language-javascript.
           pre.output
@@ -31,7 +31,7 @@ html
         h2 Babel REPL
         div.repl
           pre.source
-            code(contenteditable="true" class="language-javascript").
+            code(id="firebase-code-2" contenteditable="true" class="language-javascript firebase-element").
               let hello = (name) => `Hello ${name}`
               hello('World')
           pre.output
@@ -41,7 +41,7 @@ html
         h2 Babel Transpiler
         div.repl
           pre.source
-            code(contenteditable="true" class="language-javascript").
+            code(id="firebase-code-3" contenteditable="true" class="language-javascript firebase-element").
               async function fetchGithubOrgs() {
                 let resp = await fetch('https://api.github.com/users/octocat/orgs')
                 let json = await resp.json()
@@ -106,5 +106,5 @@ html
           li
             strong Enjoy! :)
             a(href='http://twitter.com/markdalgleish')  -@markdalgleish
-
+            
     script(src='build/build.js')
