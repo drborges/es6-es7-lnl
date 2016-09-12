@@ -31,6 +31,7 @@ bespoke.from('article', [
   remoteSync({
     projectId: 'es6-es7-lnl',
     apiKey: 'AIzaSyAvasEA1mR0f2s6mmoH-0bdwZfH3fw4m0M',
+    exceptionHandler: snackbar.exceptionHandler,
   }),
 ]);
 
