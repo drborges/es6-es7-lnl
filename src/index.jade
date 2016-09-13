@@ -6,6 +6,7 @@ html
     title ES6 + ES7 = Awesomeness
 
     link(rel='stylesheet', type='text/css', href='build/build.css')
+    link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1", crossorigin="anonymous")
 
   body
   
@@ -15,17 +16,45 @@ html
 
       section
         h1 ES6 + ES7 = Awesomeness
+      
+      section
+        h2 Hoisting
+        blockquote
+          p Because variable declarations (and declarations in general) are processed before any code is executed, declaring a variable anywhere in the code is equivalent to declaring it at the top. This also means that a variable can appear to be used before it's declared. This behavior is called "hoisting", as it appears that the variable declaration is moved to the top of the function or global code.
+          cite
+            i(class="fa fa-external-link" aria-hidden="true")
+            a(href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/var#var_hoisting") developer.mozilla.org
+        
         
       section
-        h2 Babel Transpiler
+        h2 Hoisting: Example
         div.repl
           pre.source
             code(id="firebase-code-1" contenteditable="true" class="language-javascript firebase-element").
-              let closure = (a, b) => a + b
-          pre.target
-            code.language-javascript.
+              for (var i = 0; i < 3; i++) {
+                setTimeout(function() {
+                  console.log('loop:', i);
+                }, 1000);
+              }
+              i
           pre.output
             code.language-bash.
+
+      section
+        h2 Hoisting: "let" to the rescue!
+        div.repl
+          pre.source
+            code(id="firebase-code-1" contenteditable="true" class="language-javascript firebase-element").
+              for (let i = 0; i < 3; i++) {
+                setTimeout(function() {
+                  console.log('loop:', i);
+                }, 1000);
+              }
+              // i
+          pre.output
+            code.language-bash.
+
+
 
       section
         h2 Babel REPL
