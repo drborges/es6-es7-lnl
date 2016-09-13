@@ -1,18 +1,7 @@
-function activatePresenterMode(auth, deck, currentSlideRef, elementsRef, firebaseElements, exceptionHandler) {
-  var username = window.prompt("Presenter email:")
-  var password = window.prompt("Presenter password:")
-
-  auth.signInWithEmailAndPassword(username, password).then(function(resp) {
-    currentSlideRef.set(0)
-    syncElementsToFirebase(elementsRef, firebaseElements)
-
-    deck.on('activate', function(e) {
-      currentSlideRef.set(e.index)
-    })
-  }).catch(function(error) {
-    exceptionHandler(function() {
-      throw error
-    })
+function activatePresenterMode(deck, currentSlideRef) {
+  currentSlideRef.set(0)
+  deck.on('activate', function(e) {
+    currentSlideRef.set(e.index)
   })
 }
 
@@ -55,21 +44,17 @@ function syncElementFromFirebase(element, elementsRef) {
   }
 }
 
-function isPresenterModeOn() {
-  return location.search.indexOf('mode=presenter') > 0
-}
-
 module.exports = function(options) {
   return function(deck) {
     var firebase = options.firebase
-    var exceptionHandler = options.exceptionHandler || function(fn) { fn() }
     var database = firebase.database()
     var currentSlideRef = database.ref('/deck/slide')
     var elementsRef = database.ref('/deck/elements')
     var firebaseElements = document.querySelectorAll('.firebase-element')
 
-    if (isPresenterModeOn()) {
-      activatePresenterMode(firebase.auth(), deck, currentSlideRef, elementsRef, firebaseElements, exceptionHandler)
+    if (options.isPresenter) {
+      activatePresenterMode(deck, currentSlideRef)
+      syncElementsToFirebase(elementsRef, firebaseElements)
     } else {
       syncElementsFromFirebase(elementsRef, firebaseElements)
     }

@@ -22,6 +22,9 @@ firebase.initializeApp({
   storageBucket: "gs://es6-es7-lnl.appspot.com",
 })
 
+function isPresenterModeOn() {
+  return location.search.indexOf('mode=presenter') > 0
+}
 
 // Bespoke.js
 bespoke.from('article', [
@@ -39,7 +42,7 @@ bespoke.from('article', [
   snackbar(),
   remoteSync({
     firebase: firebase,
-    exceptionHandler: snackbar.exceptionHandler,
+    isPresenter: isPresenterModeOn(),
   }),
 ]);
 
