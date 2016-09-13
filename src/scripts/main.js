@@ -13,7 +13,8 @@ var bespoke = require('bespoke'),
   prismRefresher = require('./bespoke-prism-refresher'),
   babelRepl = require('./bespoke-babel-repl'),
   snackbar = require('./bespoke-snackbar')({ snackbarSelector: '.snackbar' }),
-  remoteSync = require('./bespoke-remote-sync'),
+  remoteSyncSlide = require('./bespoke-remote-sync-slide'),
+  remoteSyncElements = require('./bespoke-remote-sync-elements'),
   remoteHighlight = require('./bespoke-remote-highlight')
 
 firebase.initializeApp({
@@ -23,8 +24,9 @@ firebase.initializeApp({
   storageBucket: "gs://es6-es7-lnl.appspot.com",
 })
 
-function isPresenterModeOn() {
-  return location.search.indexOf('mode=presenter') > 0
+var remoteSyncOptions = {
+  firebase: firebase,
+  isPresenter: location.search.indexOf('mode=presenter') > 0
 }
 
 // Bespoke.js
@@ -41,14 +43,9 @@ bespoke.from('article', [
   prismRefresher(),
   babelRepl({ exceptionHandler: snackbar.exceptionHandler }),
   snackbar(),
-  remoteSync({
-    firebase: firebase,
-    isPresenter: isPresenterModeOn(),
-  }),
-  remoteHighlight({
-    firebase: firebase,
-    isPresenter: isPresenterModeOn(),
-  }),
+  remoteSyncSlide(remoteSyncOptions),
+  remoteSyncElements(remoteSyncOptions),
+  remoteHighlight(remoteSyncOptions),
 ]);
 
 // Prism syntax highlighting
