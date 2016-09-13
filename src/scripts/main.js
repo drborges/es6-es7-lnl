@@ -13,7 +13,8 @@ var bespoke = require('bespoke'),
   prismRefresher = require('./bespoke-prism-refresher'),
   babelRepl = require('./bespoke-babel-repl'),
   snackbar = require('./bespoke-snackbar')({ snackbarSelector: '.snackbar' }),
-  remoteSync = require('./bespoke-remote-sync')
+  remoteSync = require('./bespoke-remote-sync'),
+  remoteHighlight = require('./bespoke-remote-highlight')
 
 firebase.initializeApp({
   apiKey: 'AIzaSyAvasEA1mR0f2s6mmoH-0bdwZfH3fw4m0M',
@@ -41,6 +42,10 @@ bespoke.from('article', [
   babelRepl({ exceptionHandler: snackbar.exceptionHandler }),
   snackbar(),
   remoteSync({
+    firebase: firebase,
+    isPresenter: isPresenterModeOn(),
+  }),
+  remoteHighlight({
     firebase: firebase,
     isPresenter: isPresenterModeOn(),
   }),
