@@ -29,8 +29,11 @@ function syncElementFromFirebase(element, remoteSyncRef) {
   if (element.id) {
     var elementRef = remoteSyncRef.child(element.id)
     elementRef.on('value', function(snapshot) {
-      element.textContent = snapshot.val()
-      element.dispatchEvent(new Event("blur"))
+      var val = snapshot.val()
+      if (val != null) {
+        element.textContent = snapshot.val()
+        element.dispatchEvent(new Event("blur"))
+      }
     })
   }
 }
