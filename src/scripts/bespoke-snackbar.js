@@ -1,25 +1,40 @@
-module.exports = function(options) {
-  var plugin = function() {
-    return function() {
-      window.addEventListener('load', function() {
-        // If no selector is provided, the document is used to handle snackbar events
-        var snackbar = document.querySelector(options.snackbarSelector) || document
+function hide(snackbar) {
+  if (snackbar) {
+    snackbar.classList.add('hidden')
+  }
+}
 
-        snackbar.addEventListener('snackbar', function(e) {
-          snackbar.textContent = e.detail.message
-          snackbar.classList.remove('hidden')
-          setTimeout(function() { snackbar.classList.add('hidden') }, 5000)
-        })
+function show(snackbar, message) {
+  if (snackbar) {
+    snackbar.textContent = message
+    snackbar.classList.remove('hidden')
+  }
+}
+
+module.exports = function(options) {
+  var timeout;
+  var snackbar;
+
+  var plugin = function() {
+    return function(deck) {
+      window.addEventListener('load', function() {
+        snackbar = document.querySelector(options.snackbarSelector)
+        deck.on('next', function() { hide(snackbar) })
+        deck.on('prev', function() { hide(snackbar) })
+        deck.on('slide', function() { hide(snackbar) })
       })
     }
   }
 
-  plugin.exceptionHandler = function(fn) {
+  plugin.exceptionHandler = function exceptionHandler(fn) {
+    clearTimeout(timeout)
+
     try {
+      hide(snackbar)
       fn()
     } catch(e) {
-      var snackbar = document.querySelector(options.snackbarSelector)
-      snackbar.dispatchEvent(new CustomEvent('snackbar', { 'detail': { message: e, level: 'error' }}))
+      show(snackbar, e)
+      timeout = setTimeout(function() { hide(snackbar) }, 5000)
     }
   }
 
