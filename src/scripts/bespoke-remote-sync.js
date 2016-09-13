@@ -49,8 +49,8 @@ module.exports = function(options) {
     var firebase = options.firebase
     var database = firebase.database()
     var currentSlideRef = database.ref('/deck/slide')
-    var elementsRef = database.ref('/deck/elements')
-    var firebaseElements = document.querySelectorAll('.firebase-element')
+    var elementsRef = database.ref('/deck/remote-sync')
+    var firebaseElements = document.querySelectorAll('.remote-sync')
 
     if (options.isPresenter) {
       activatePresenterMode(deck, currentSlideRef)
