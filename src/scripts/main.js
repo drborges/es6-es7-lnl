@@ -1,5 +1,6 @@
 // Require Node modules in the browser thanks to Browserify: http://browserify.org
 var bespoke = require('bespoke'),
+  firebase = require('firebase'),
   voltaire = require('bespoke-theme-voltaire'),
   keys = require('bespoke-keys'),
   touch = require('bespoke-touch'),
@@ -13,6 +14,14 @@ var bespoke = require('bespoke'),
   babelRepl = require('./bespoke-babel-repl'),
   snackbar = require('./bespoke-snackbar')({ snackbarSelector: '.snackbar' }),
   remoteSync = require('./bespoke-remote-sync')
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyAvasEA1mR0f2s6mmoH-0bdwZfH3fw4m0M',
+  authDomain: "es6-es7-lnl.firebaseapp.com",
+  databaseURL: "https://es6-es7-lnl.firebaseio.com",
+  storageBucket: "gs://es6-es7-lnl.appspot.com",
+})
+
 
 // Bespoke.js
 bespoke.from('article', [
@@ -29,8 +38,7 @@ bespoke.from('article', [
   babelRepl({ exceptionHandler: snackbar.exceptionHandler }),
   snackbar(),
   remoteSync({
-    projectId: 'es6-es7-lnl',
-    apiKey: 'AIzaSyAvasEA1mR0f2s6mmoH-0bdwZfH3fw4m0M',
+    firebase: firebase,
     exceptionHandler: snackbar.exceptionHandler,
   }),
 ]);

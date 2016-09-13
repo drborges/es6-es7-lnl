@@ -1,10 +1,8 @@
-var firebase = require('firebase')
-
-function activatePresenterMode(deck, currentSlideRef, elementsRef, firebaseElements, exceptionHandler) {
+function activatePresenterMode(auth, deck, currentSlideRef, elementsRef, firebaseElements, exceptionHandler) {
   var username = window.prompt("Presenter email:")
   var password = window.prompt("Presenter password:")
 
-  firebase.auth().signInWithEmailAndPassword(username, password).then(function(resp) {
+  auth.signInWithEmailAndPassword(username, password).then(function(resp) {
     currentSlideRef.set(0)
     syncElementsToFirebase(elementsRef, firebaseElements)
 
@@ -20,13 +18,13 @@ function activatePresenterMode(deck, currentSlideRef, elementsRef, firebaseEleme
 
 function syncElementsToFirebase(elementsRef, firebaseElements) {
   for (var i = 0; i < firebaseElements.length; i++) {
-    syncElementStateToFirebase(firebaseElements[i], elementsRef.path)
+    syncElementStateToFirebase(firebaseElements[i], elementsRef)
   }
 }
 
-function syncElementStateToFirebase(element, firebaseBasePath) {
+function syncElementStateToFirebase(element, elementsRef) {
   if (element.contentEditable && element.id) {
-    var elementRef = firebase.database().ref(firebaseBasePath + "/" + element.id)
+    var elementRef = elementsRef.child(element.id)
     window.addEventListener('load', function() {
       elementRef.set(element.textContent)
     })
@@ -43,13 +41,13 @@ function syncElementStateToFirebase(element, firebaseBasePath) {
 
 function syncElementsFromFirebase(elementsRef, firebaseElements) {
   for (var i = 0; i < firebaseElements.length; i++) {
-    syncElementFromFirebase(firebaseElements[i], elementsRef.path)
+    syncElementFromFirebase(firebaseElements[i], elementsRef)
   }
 }
 
-function syncElementFromFirebase(element, firebaseBasePath) {
+function syncElementFromFirebase(element, elementsRef) {
   if (element.contentEditable && element.id) {
-    var elementRef = firebase.database().ref(firebaseBasePath + "/" + element.id)
+    var elementRef = elementsRef.child(element.id)
     elementRef.on('value', function(snapshot) {
       element.textContent = snapshot.val()
       element.dispatchEvent(new Event("blur"))
@@ -62,14 +60,8 @@ function isPresenterModeOn() {
 }
 
 module.exports = function(options) {
-  firebase.initializeApp({
-    apiKey: options.apiKey,
-    authDomain: options.projectId + ".firebaseapp.com",
-    databaseURL: "https://" + options.projectId + ".firebaseio.com",
-    storageBucket: "gs://" + options.projectId + ".appspot.com",
-  })
-
   return function(deck) {
+    var firebase = options.firebase
     var exceptionHandler = options.exceptionHandler || function(fn) { fn() }
     var database = firebase.database()
     var currentSlideRef = database.ref('/deck/slide')
@@ -77,7 +69,7 @@ module.exports = function(options) {
     var firebaseElements = document.querySelectorAll('.firebase-element')
 
     if (isPresenterModeOn()) {
-      activatePresenterMode(deck, currentSlideRef, elementsRef, firebaseElements, exceptionHandler)
+      activatePresenterMode(firebase.auth(), deck, currentSlideRef, elementsRef, firebaseElements, exceptionHandler)
     } else {
       syncElementsFromFirebase(elementsRef, firebaseElements)
     }
