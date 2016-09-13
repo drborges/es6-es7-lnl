@@ -23,13 +23,13 @@ function turn(ref, value) {
 module.exports = function remoteHighlight(options) {
   return function(deck) {
     var database = options.firebase.database()
-    var highlightsRef = database.ref('/deck/highlights')
+    var highlightsRef = database.ref('/deck/remote-highlights')
 
     highlightsRef.on('child_added', updateHighlight)
     highlightsRef.on('child_changed', updateHighlight)
 
     if (options.isPresenter) {
-      var firebaseHighlights = document.querySelectorAll('.firebase-highlight')
+      var firebaseHighlights = document.querySelectorAll('.remote-highlights')
       for (var i = 0; i < firebaseHighlights.length; i++) {
         var element = firebaseHighlights[i]
         var elementRef = highlightsRef.child(element.id)
