@@ -15,7 +15,8 @@ var bespoke = require('bespoke'),
   snackbar = require('./bespoke-snackbar')({ snackbarSelector: '.snackbar' }),
   remoteSyncSlide = require('./bespoke-remote-sync-slide'),
   remoteSyncElements = require('./bespoke-remote-sync-elements'),
-  remoteHighlight = require('./bespoke-remote-highlight')
+  remoteHighlight = require('./bespoke-remote-highlight'),
+  loginIfNeeded = require('./firebase-login')
 
 firebase.initializeApp({
   apiKey: 'AIzaSyAvasEA1mR0f2s6mmoH-0bdwZfH3fw4m0M',
@@ -29,26 +30,34 @@ var remoteSyncOptions = {
   isPresenter: location.search.indexOf('mode=presenter') > 0
 }
 
-// Bespoke.js
-bespoke.from('article', [
-  voltaire(),
-  keys(),
-  touch(),
-  bullets('li, .bullet'),
-  backdrop(),
-  scale(),
-  hash(),
-  progress(),
-  forms(),
-  prismRefresher(),
-  babelRepl({ exceptionHandler: snackbar.exceptionHandler }),
-  snackbar(),
-  remoteSyncSlide(remoteSyncOptions),
-  remoteSyncElements(remoteSyncOptions),
-  remoteHighlight(remoteSyncOptions),
-]);
+if (remoteSyncOptions.isPresenter) {
+  loginIfNeeded(firebase, initializeDeck)
+} else {
+  initializeDeck()
+}
 
-// Prism syntax highlighting
-// This is actually loaded from "bower_components" thanks to
-// debowerify: https://github.com/eugeneware/debowerify
-require('prism');
+function initializeDeck() {
+  // Bespoke.js
+  bespoke.from('article', [
+    voltaire(),
+    keys(),
+    touch(),
+    bullets('li, .bullet'),
+    backdrop(),
+    scale(),
+    hash(),
+    progress(),
+    forms(),
+    prismRefresher(),
+    babelRepl({ exceptionHandler: snackbar.exceptionHandler }),
+    snackbar(),
+    remoteSyncSlide(remoteSyncOptions),
+    remoteSyncElements(remoteSyncOptions),
+    remoteHighlight(remoteSyncOptions),
+  ])
+
+  // Prism syntax highlighting
+  // This is actually loaded from "bower_components" thanks to
+  // debowerify: https://github.com/eugeneware/debowerify
+  require('prism')
+}
