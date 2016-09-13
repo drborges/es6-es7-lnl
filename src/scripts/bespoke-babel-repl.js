@@ -34,16 +34,21 @@ function transpileAndEvaluate(source, target, output, exceptionHandler) {
 module.exports = function(options) {
   var exceptionHandler = options.exceptionHandler || function(fn) { fn() }
 
-  return function() {
-    var repls = document.querySelectorAll('.repl')
-    for (var i = 0; i < repls.length; ++i) {
-      var repl = repls[i]
-      var source = repl.querySelector('pre.source code')
-      var target = repl.querySelector('pre.target code')
-      var output = repl.querySelector('pre.output code')
+  return function(deck) {
+    deck.on('activate', function(e) {
+      var repls = e.slide.querySelectorAll('.repl')
+      for (var i = 0; i < repls.length; ++i) {
+        var repl = repls[i]
+        var source = repl.querySelector('pre.source code')
+        var target = repl.querySelector('pre.target code')
+        var output = repl.querySelector('pre.output code')
 
-      window.addEventListener('load', transpileAndEvaluate(source, target, output, exceptionHandler))
-      source.addEventListener('blur', transpileAndEvaluate(source, target, output, exceptionHandler))
-    }
+        source.addEventListener('blur', transpileAndEvaluate(source, target, output, exceptionHandler))
+        if (output) {
+          output.textContent = "> "
+          output.addEventListener('click', transpileAndEvaluate(source, target, output, exceptionHandler))
+        }
+      }
+    })
   }
 }
