@@ -24,8 +24,9 @@ function transpileAndEvaluate(source, target, output, exceptionHandler) {
       }
 
       if (output) {
-        var code = JSON.stringify(eval(transpiledCode.replace('use strict', '')))
-        output.textContent = "> " + code
+        var evaluationResult = JSON.stringify(eval(transpiledCode.replace('use strict', '')))
+        output.textContent = "> " + evaluationResult
+        output.dispatchEvent(new Event('blur'))
       }
     })
   }

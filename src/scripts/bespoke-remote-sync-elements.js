@@ -5,19 +5,17 @@ function syncElementsToFirebase(remoteSyncRef, firebaseElements) {
 }
 
 function syncElementToFirebase(element, remoteSyncRef) {
-  if (element.contentEditable && element.id) {
+  if (element.id) {
     var elementRef = remoteSyncRef.child(element.id)
-    window.addEventListener('load', function() {
-      elementRef.set(element.textContent)
-    })
+    var updateRef = function(ref, elm) {
+      return function() {
+        ref.set(elm.textContent)
+      }
+    }
 
-    element.addEventListener('keyup', function(event) {
-      elementRef.set(element.textContent)
-    })
-
-    element.addEventListener('blur', function(event) {
-      elementRef.set(element.textContent)
-    })
+    window.addEventListener('load', updateRef(elementRef, element))
+    element.addEventListener('keyup', updateRef(elementRef, element))
+    element.addEventListener('blur', updateRef(elementRef, element))
   }
 }
 
@@ -28,7 +26,7 @@ function syncElementsFromFirebase(remoteSyncRef, firebaseElements) {
 }
 
 function syncElementFromFirebase(element, remoteSyncRef) {
-  if (element.contentEditable && element.id) {
+  if (element.id) {
     var elementRef = remoteSyncRef.child(element.id)
     elementRef.on('value', function(snapshot) {
       element.textContent = snapshot.val()
