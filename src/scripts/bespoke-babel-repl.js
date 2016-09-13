@@ -24,7 +24,8 @@ function transpileAndEvaluate(source, target, output, exceptionHandler) {
       }
 
       if (output) {
-        output.textContent = "> " + eval(transpiledCode.replace('use strict', ''))
+        var code = JSON.stringify(eval(transpiledCode.replace('use strict', '')))
+        output.textContent = "> " + code
       }
     })
   }
