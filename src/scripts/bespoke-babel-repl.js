@@ -34,8 +34,9 @@ function transpileAndEvaluate(source, target, output, exceptionHandler) {
 
 module.exports = function(options) {
   var exceptionHandler = options.exceptionHandler || function(fn) { fn() }
-
   return function(deck) {
+    var eventHandlers = {}
+
     deck.on('activate', function(e) {
       var repls = e.slide.querySelectorAll('.repl')
       for (var i = 0; i < repls.length; ++i) {
@@ -43,12 +44,29 @@ module.exports = function(options) {
         var source = repl.querySelector('pre.source code')
         var target = repl.querySelector('pre.target code')
         var output = repl.querySelector('pre.output code')
+        eventHandlers[e.index] = eventHandlers[e.index] || {}
+        eventHandlers[e.index]['blur'] = transpileAndEvaluate(source, target, output, exceptionHandler)
+        eventHandlers[e.index]['click'] = transpileAndEvaluate(source, target, output, exceptionHandler)
 
-        source.addEventListener('blur', transpileAndEvaluate(source, target, output, exceptionHandler))
+        source.addEventListener('blur', eventHandlers[e.index]['blur'])
         if (output) {
           output.textContent = "> "
-          output.addEventListener('click', transpileAndEvaluate(source, target, output, exceptionHandler))
+          output.addEventListener('click', eventHandlers[e.index]['click'])
         }
+      }
+    })
+
+    deck.on('deactivate', function(e) {
+      var repls = e.slide.querySelectorAll('.repl')
+      for (var i = 0; i < repls.length; ++i) {
+        var repl = repls[i]
+        var source = repl.querySelector('pre.source code')
+        var target = repl.querySelector('pre.target code')
+        var output = repl.querySelector('pre.output code')
+
+        output.textContent = "> "
+        source.removeEventListener('blur', eventHandlers[e.index]['blur'])
+        output.removeEventListener('click', eventHandlers[e.index]['click'])
       }
     })
   }
