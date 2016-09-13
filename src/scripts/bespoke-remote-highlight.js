@@ -1,9 +1,11 @@
 function updateHighlight(snapshot) {
   var element = document.getElementById(snapshot.key)
-  if (snapshot.val() == 'on') {
-    element.classList.add('highlight')
-  } else {
-    element.classList.remove('highlight')
+  if (element) {
+    if (snapshot.val() == 'on') {
+      element.classList.add('highlight')
+    } else {
+      element.classList.remove('highlight')
+    }
   }
 }
 
