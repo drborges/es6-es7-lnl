@@ -16,124 +16,354 @@ html
 
       section
         h1 ES6 + ES7 = Awesomeness
+        
+      section
+        h2 Before we start...
+        h3 Did you know:
+        ul
+          li <i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="http://www.ecma-international.org/memento/TC39.htm">ECMAScript</a> != Javascript?
+          li Harmony = ES6 = ES2015?
+          li ES7 = ES.Next = ES2016?
+          li <i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://remysharp.com/2010/10/08/what-is-a-polyfill">Polyfills</a> provide support to features not yet available in browsers?
+          li <i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://scotch.io/tutorials/javascript-transpilers-what-they-are-why-we-need-them">Transpilers</a> are compilers with a fancy name?
       
       section
-        h2 Hoisting
+        h2 <i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://babeljs.io">Babel</a> Transpiler
+        h3 babel.transform(ES6 / ES7) => ES5 
+        div.repl
+          pre(id="babel-repl-source" class="source remote-highlights")
+            code(id="babel-repl-code" contenteditable="true" class="language-javascript remote-sync").
+              let hello = (name) => `Hello ${name}`
+              hello('World')
+          pre(id="babel-repl-target" class="target remote-highlights")
+            code(id="babel-repl-target-code" class="language-javascript remote-sync").
+          pre(id="babel-repl-output" class="output remote-highlights")
+            code(id="babel-repl-output-code" class="language-javascript remote-sync").
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Warm up
+        h3 Probably stuff you already know...
+        ul
+          li Improved String API
+          li Object literal initialization
+          li Class and Class Expressions
+          li <i><b>var</b></i> vs <i><b>let</b></i> vs <i><b>const</b></i>
+          li Arrow functions
+
+      section
+        h2 Improved <i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/">String</a> API
+        h3 startsWith, endsWith, repeat, string templates...
+        div.repl
+          pre(id="string-api-source" class="source remote-highlights")
+            code(id="string-api-code" contenteditable="true" class="language-javascript remote-sync remote-highlights").
+              const message = "Well, hello!";
+              message.startsWith('Well, ');
+          pre(id="string-api-output" class="output remote-highlights")
+            code(id="string-api-output-code" class="language-javascript remote-sync").
+
+      section
+        h2 Object literal initialization
+        h3 Shorthands that save you some typing...
+        div.repl
+          pre(id="object-literal-source" class="source remote-highlights")
+            code(id="object-literal-code" contenteditable="true" class="language-javascript remote-sync remote-highlights").
+              let name = 'Borges'
+              let age = 30
+              let person = { name: name, age: age }
+              person
+          pre(id="object-literal-output" class="output remote-highlights")
+            code(id="object-literal-output-code" class="language-javascript remote-sync").
+            
+      section
+        h2 Class and Class Expressions
+        h3 Because every other language has it?
+        div.repl
+          pre(id="classes-source" class="source remote-highlights")
+            code(id="classes-code" contenteditable="true" class="language-javascript remote-sync remote-highlights").
+              class User {
+                constructor(name='guest') {
+                  this.name = name
+                }
+                
+                greet(someone, message='Hi') {
+                  return `${this.name}: ${message} ${someone}!`
+                }
+              }
+              new User('Diego').greet('Ben')
+          pre(id="classes-output" class="output remote-highlights")
+            code(id="classes-output-code" class="language-javascript remote-sync").
+
+      section
+        h2 <b>var</b> vs <b>let</b> vs <b>const</b>
+        h3 stating the obvious
+        div.repl
+          pre(id="stating-the-obvious-source" class="source remote-highlights")
+            code(id="stating-the-obvious-code" contenteditable="true" class="language-javascript remote-sync remote-highlights").
+              const age = 30
+              // age += 1
+          pre(id="stating-the-obvious-output" class="output remote-highlights")
+            code(id="stating-the-obvious-output-code" class="language-javascript remote-sync").
+
+      section
+        h2 <b>var</b> vs <b>let</b>
+        h3 It's all about scopes
+        div.repl
+          pre(id="all-about-scopes-source" class="source remote-highlights")
+            code(id="all-about-scopes-code" contenteditable="true" class="language-javascript remote-sync remote-highlights").
+              var birthday = true
+              if (birthday) {
+                var age = 30
+              }
+              age
+          pre(id="all-about-scopes-output" class="output remote-highlights")
+            code(id="all-about-scopes-output-code" class="language-javascript remote-sync").
+            
+      section
+        h2 <b>var</b> vs <b>let</b>
+        h3 Hoisting
         blockquote
           p Because variable declarations (and declarations in general) are processed before any code is executed, declaring a variable anywhere in the code is equivalent to declaring it at the top. This also means that a variable can appear to be used before it's declared. This behavior is called "hoisting", as it appears that the variable declaration is moved to the top of the function or global code.
           cite
-            i(class="fa fa-external-link" aria-hidden="true")
             a(href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/var#var_hoisting") developer.mozilla.org
-        
+            i(class="fa fa-external-link" aria-hidden="true")
         
       section
-        h2 Hoisting: Example
+        h2 Hoisting
+        h3 The Problem
         div.repl
-          pre.source
-            code(id="firebase-code-1" contenteditable="true" class="language-javascript firebase-element").
+          pre(id="hoisting-the-problem-source" class="source remote-highlights")
+            code(id="hoisting-the-problem-code" contenteditable="true" class="language-javascript remote-sync remote-highlights").
               for (var i = 0; i < 3; i++) {
                 setTimeout(function() {
-                  console.log('loop:', i);
+                  console.log('item:', i);
                 }, 1000);
               }
               i
-          pre.output
-            code.language-bash.
-
+          pre(id="hoisting-the-problem-output" class="output remote-highlights")
+            code(id="hoisting-the-problem-output-code" class="language-javascript remote-sync").
+          pre(id="hoisting-the-problem-logger" class="remote-highlights")
+            code(id="hoisting-the-problem-logger-code" class="logger language-javascript remote-sync").
+            
       section
-        h2 Hoisting: "let" to the rescue!
+        h2 Hoisting
+        h3 Workaround: <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Glossary/function">IIFE</a><i class="fa fa-external-link" aria-hidden="true"></i>
         div.repl
-          pre.source
-            code(id="firebase-code-1" contenteditable="true" class="language-javascript firebase-element").
+          pre(id="hoisting-a-solution-source" class="source remote-highlights")
+            code(id="hoisting-a-solution-code" contenteditable="true" class="language-javascript remote-sync remote-highlights").
+              for (var i = 0; i < 3; i++) {
+                (function() {
+                  var index = i
+                  setTimeout(function() {
+                    console.log('item', index);
+                  }, 1000);
+                })()
+              }
+              i
+          pre(id="hoisting-a-solution-output" class="output remote-highlights")
+            code(id="hoisting-a-solution-output-code" class="language-javascript remote-sync").
+          pre(id="hoisting-a-solution-logger" class="remote-highlights")
+            code(id="hoisting-a-solution-logger-code" class="logger language-javascript remote-sync").
+              
+      section
+        h2 Hoisting
+        h3 The solution
+        div.repl
+          pre(id="a-better-solution-source" class="source remote-highlights")
+            code(id="a-better-solution-code" contenteditable="true" class="language-javascript remote-sync").
               for (let i = 0; i < 3; i++) {
                 setTimeout(function() {
-                  console.log('loop:', i);
+                  console.log('item:', i);
                 }, 1000);
               }
               // i
-          pre.output
-            code.language-bash.
+          pre(id="a-better-solution-output" class="output remote-highlights")
+            code(id="a-better-solution-output-code" class="language-javascript remote-sync").
+          pre(id="a-better-solution-logger" class="remote-highlights")
+            code(id="a-better-solution-logger-code" class="logger language-javascript remote-sync").
 
-
-
+  
       section
-        h2 Babel REPL
+        h2 Arrow Function
+        h3 (a, b) => a + b
         div.repl
-          pre.source
-            code(id="firebase-code-2" contenteditable="true" class="language-javascript firebase-element").
-              let hello = (name) => `Hello ${name}`
-              hello('World')
-          pre.output
-            code.language-bash.
-
+          pre(id="arrow-function-source" class="source remote-highlights")
+            code(id="arrow-function-code" contenteditable="true" class="language-javascript remote-sync").
+              [1, 2, 3].map(function(n) { return n ** 3 })
+          pre(id="arrow-function-target" class="target remote-highlights")
+            code(id="arrow-function-target-code" class="language-javascript remote-sync").
+          pre(id="arrow-function-output" class="output remote-highlights")
+            code(id="arrow-function-output-code" class="language-javascript remote-sync").
+      
       section
-        h2 Babel Transpiler
+        h2 Arrow Function
+        h3 Lexical "this": <b>self</b> is no more...
         div.repl
-          pre.source
-            code(id="firebase-code-3" contenteditable="true" class="language-javascript firebase-element").
-              async function fetchGithubOrgs() {
-                let resp = await fetch('https://api.github.com/users/octocat/orgs')
-                let json = await resp.json()
-                return json
+          pre(id="arrow-function-before-source" class="source remote-highlights")
+            code(id="arrow-function-before-code" contenteditable="true" class="language-javascript remote-sync").
+              var project = {
+                taxRate: 1.2,
+                items: [10, 20, 3.5],
+                cost() {
+                  return this.items.reduce(function(sum, item) {
+                    return sum + (item * this.taxRate)
+                  })
+                }
               }
-              let json = fetchGithubOrgs().then((json) => console.log(json))
-          pre.target
-            code.language-javascript.
-          pre.output
-            code.language-bash.
+              project.cost()
+          pre(id="arrow-function-before-output" class="output remote-highlights")
+            code(id="arrow-function-before-output-code" class="language-javascript remote-sync").
+          pre(id="arrow-function-before-logger" class="remote-highlights")
+            code(id="arrow-function-before-logger-code" class="logger language-javascript remote-sync").
 
       section
-        h2 Keyboard Interaction
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-keys">bespoke-keys</a>
-
-      section
-        h2 Touch Interaction
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-touch">bespoke-touch</a>
-
-      section
-        h2 Responsive Slides
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-scale">bespoke-scale</a>
-
-      section
-        h2 Bullet List
-        h3.bullet Powered by <a href="https://github.com/markdalgleish/bespoke-bullets">bespoke-bullets</a>
+        h2 Arrow Function
+        h3 Lexical "this": <b>self</b> is no more...
+        div.repl
+          pre(id="arrow-function-after-source" class="source remote-highlights")
+            code(id="arrow-function-after-code" contenteditable="true" class="language-javascript remote-sync").
+              var project = {
+                taxRate: 1.2,
+                items: [10, 20, 3.5],
+                cost() {
+                  return this.items.reduce((sum, item) => sum + (item * this.taxRate))
+                }
+              }
+              project.cost()
+          pre(id="arrow-function-after-output" class="output remote-highlights")
+            code(id="arrow-function-after-output-code" class="language-javascript remote-sync").
+          pre(id="arrow-function-after-logger" class="remote-highlights")
+            code(id="arrow-function-after-logger-code" class="logger language-javascript remote-sync").
+            
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Lets get serious, now...
+        h3 
         ul
-          li Bullet 1
-          li Bullet 2
-          li Bullet 3
+          li For .. of
+          li Spread Operator
+          li Rest Operator
+          li Simulating Named Parameters
+          li Generators
+          li Async functions
+          li Decorators
+      
+      section
+        h2 <b>For .. of</b>
+        h3 a proper <b>for .. in</b> loop
+        div.repl
+          pre(id="for-of-source" class="source remote-highlights")
+            code(id="for-of-code" contenteditable="true" class="language-javascript remote-sync").
+              let items = [1, 2, 3]
+              for (let item of items) {
+                console.log(item)
+              }
+          pre(id="for-of-output" class="output remote-highlights")
+            code(id="for-of-output-code" class="language-javascript remote-sync").
+          pre(id="for-of-logger" class="remote-highlights")
+            code(id="for-of-logger-code" class="logger language-javascript remote-sync").
 
       section
-        h2 Syntax Highlighting
-        h3 Powered by <a href="http://twitter.com/LeaVerou">Lea Verou</a>'s <a href="https://github.com/LeaVerou/prism">Prism</a>
-        pre
-          code.language-javascript.
-            bespoke.from('article', [
-              classes(),
-              keys(),
-              touch(),
-              bullets('li, .bullet')
-            ]);
+        h2 Spread Operator
+        h3 varargs with lasers <3
+        div.repl
+          pre(id="spread-operator-source" class="source remote-highlights")
+            code(id="spread-operator-code" contenteditable="true" class="language-javascript remote-sync").
+              let a = [1, 2, 3]
+              let b = [...a, 4]
+              b
+          pre(id="spread-operator-output" class="output remote-highlights")
+            code(id="spread-operator-output-code" class="language-javascript remote-sync").
 
-      section(data-bespoke-hash='named-route')
-        h2 Named Route
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-hash">bespoke-hash</a>
-        p Look up! This route has been named with a <em>'data-bespoke-hash'</em> attribute.
+      section
+        h2 Spread Operator
+        h3 Works on objects too!
+        div.repl
+          pre(id="spread-operator-on-objects-source" class="source remote-highlights")
+            code(id="spread-operator-on-objects-code" contenteditable="true" class="language-javascript remote-sync").
+              let person = { name: 'Borges', email: 'drborges.cic@gmail.com' }
+              let user = { ...person, name: 'diego', login: 'diego.borges' }
+              user
+          pre(id="spread-operator-on-objects-output" class="output remote-highlights")
+            code(id="spread-operator-on-objects-output-code" class="language-javascript remote-sync").
+            
+      section
+        h2 Rest Operator
+        h3 Destructuring to construct
+        div.repl
+          pre(id="rest-operator-source" class="source remote-highlights")
+            code(id="rest-operator-code" contenteditable="true" class="language-javascript remote-sync").
+              let [ head, ...tail ] = [1, 2, 3, 4];
+              tail
+              // let { name } = { name: 'Borges', age: 30 }
+              // new Date(...[2015, 1, 1]);
+          pre(id="rest-operator-output" class="output remote-highlights")
+            code(id="rest-operator-output-code" class="language-javascript remote-sync").
+
+      section
+        h2 Rest Operator
+        h3 Simulating ruby named parameters
+        div.repl
+          pre(id="simulating-ruby-named-parameters-source" class="source remote-highlights")
+            code(id="simulating-ruby-named-parameters-code" contenteditable="true" class="language-javascript remote-sync").
+              function greet({ person, message } = { person: 'Guest', message: 'Hello' }) {
+                return `${message}, ${person}!`
+              }
+              greet({ person: 'Bruno', message: 'Hi' })
+          pre(id="simulating-ruby-named-parameters-output" class="output remote-highlights")
+            code(id="simulating-ruby-named-parameters-output-code" class="language-javascript remote-sync").
+
+      section
+        h2 Generators
+        h3 The foundation for iterators
+        div.repl
+          pre(id="generators-source" class="source remote-highlights")
+            code(id="generators-code" contenteditable="true" class="language-javascript remote-sync").
+              function *integers() {
+                let i = 0
+                while (true) {
+                  yield i++
+                }
+              }
+              let iterator = integers()
+              iterator.next().value
+          pre(id="generators-output" class="output remote-highlights")
+            code(id="generators-output-code" class="language-javascript remote-sync").
+          pre(id="generators-output-logger" class="remote-highlights")
+            code(id="generators-output-logger-code" class="logger language-javascript remote-sync").
+            
+      section
+        h2 Async functions
+        h3 I Promise, it feels like imperative programming
+        div.repl
+          pre(id="async-func-source" class="source remote-highlights")
+            code(id="async-func-code" contenteditable="true" class="language-javascript remote-sync").
+              async function fetchGithubOrgs() {
+                let resp = await fetch('https://api.github.com/users/drborges/repos')
+                let repos = await resp.json()
+                return repos.map(r => r.name)
+              }
+              fetchGithubOrgs().then((reposNames) => console.log(reposNames.join("\n")))
+          pre(id="async-func-output" class="output remote-highlights")
+            code(id="async-func-output-code" class="language-javascript remote-sync").
+          pre(id="async-func-logger" class="remote-highlights")
+            code(id="async-func-logger-code" class="logger language-javascript remote-sync").
+
+      section
+        h2 Decorators
+        h3 Currently disabled on <i class="fa fa-external-link" aria-hidden="true"></i><a href="https://babeljs.io/docs/plugins/syntax-decorators">Babel 6</a>
+        div.repl
+          pre(id="decorators-source" class="source remote-highlights")
+            code(id="decorators-code" contenteditable="true" class="language-javascript remote-sync").
+              function Testable (target) { target.isTestable = true }
+              @Testable
+              class Authenticator {}
+              Authenticator.isTestable
+          pre(id="decorators-output" class="output remote-highlights")
+            code(id="decorators-output-code" class="language-javascript remote-sync").
+          pre(id="decorators-output-logger" class="remote-highlights")
+            code(id="decorators-output-logger-code" class="logger language-javascript remote-sync").
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h2 Emphatic Slide!
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-backdrop">bespoke-backdrop</a>
-
-      section
-        h2.bullet Just the beginning...
-        br
-        ul
-          li Edit <a href="http://jade-lang.com/">Jade</a> markup in <em>'src/index.jade'</em>
-          li Edit <a href="http://learnboost.github.io/stylus/">Stylus</a> styles in <em>'src/styles/main.styl'</em>
-          li Edit JavaScript in <em>'src/scripts/main.js'</em>
-        br
-        ul
-          li
-            strong Enjoy! :)
-            a(href='http://twitter.com/markdalgleish')  -@markdalgleish
+        h2 Questions?
+        h3 Source code at <i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://github.com/drborges/es6-es7-lnl">github.com/drborges</a>
             
     script(src='build/build.js')

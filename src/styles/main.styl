@@ -7,16 +7,21 @@
 @import 'prism/themes/prism-tomorrow.css'
 // Check out "bower_components/prism/themes/" for available themes
 
-h2
-  margin: 20px
+a
+  color: #8383f3
+
+h3
+  font-size: 18px !important
+  margin: 10px
+  margin-bottom: 20px
 
 i.fa
   font-size: 10px
   vertical-align: middle
-  margin: 5px
+  margin: 3px
 
-p
-  font-size: 18px
+p, li
+  font-size: 14px !important
 
 blockquote
   text-align: right
@@ -32,18 +37,24 @@ cite
 pre
   margin: 5px !important
   padding: 0 !important
-  font-size: 12px
+  font-size: 10px !important
   flex-grow: 1
   max-width: 600px
   max-height: 200px
   border: 1px solid #333
+  border-radius: 2px
 
 pre:hover
   border: 1px solid #fff
+  box-shadow: 0px 0px 5px #fff
+
+.highlight
+  border: 1px solid #fff
+  box-shadow: 0px 0px 5px #fff
 
 code
   display: block
-  padding: 15px
+  padding: 10px
 
 code:focus
   outline: none
@@ -53,6 +64,9 @@ code:hover
 
 code[contenteditable=true]:hover
   cursor: text
+
+pre.output code:hover
+  cursor: pointer
 
 .snackbar
   position: absolute
@@ -65,7 +79,6 @@ code[contenteditable=true]:hover
   background-color: #f30
   box-shadow: 0px 2px 5px #f30
   -webkit-transition: top 0.5s
-
 
 .snackbar.hidden
   top: -100px
