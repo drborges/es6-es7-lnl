@@ -16,6 +16,7 @@ var bespoke = require('bespoke'),
   remoteSyncElements = require('./bespoke-remote-sync-elements'),
   remoteHighlight = require('./bespoke-remote-highlight'),
   proxyConsoleLog = require('./bespoke-proxy-console-log'),
+  presenceCounter = require('./bespoke-presence-counter'),
   loginIfNeeded = require('./firebase-login')
 
 firebase.initializeApp({
@@ -51,6 +52,7 @@ function initializeDeck() {
     babelRepl({ exceptionHandler: snackbar.exceptionHandler }),
     snackbar(),
     proxyConsoleLog(),
+    presenceCounter(firebase),
     remoteSyncSlide(remoteSyncOptions),
     remoteSyncElements(remoteSyncOptions),
     remoteHighlight(remoteSyncOptions),
