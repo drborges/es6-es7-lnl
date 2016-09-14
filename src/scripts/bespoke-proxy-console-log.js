@@ -27,6 +27,7 @@ module.exports = function() {
       var logger = e.slide.querySelector('.logger')
       if (logger) {
         consoleLogProxy(logger)
+        logger.addEventListener('click', function() { updateElementContent(logger, '') })
       }
     })
 
