@@ -16,6 +16,7 @@ var bespoke = require('bespoke'),
   remoteSyncSlide = require('./bespoke-remote-sync-slide'),
   remoteSyncElements = require('./bespoke-remote-sync-elements'),
   remoteHighlight = require('./bespoke-remote-highlight'),
+  proxyConsoleLog = require('./bespoke-proxy-console-log'),
   loginIfNeeded = require('./firebase-login')
 
 firebase.initializeApp({
@@ -51,6 +52,7 @@ function initializeDeck() {
     prismRefresher(),
     babelRepl({ exceptionHandler: snackbar.exceptionHandler }),
     snackbar(),
+    proxyConsoleLog(),
     remoteSyncSlide(remoteSyncOptions),
     remoteSyncElements(remoteSyncOptions),
     remoteHighlight(remoteSyncOptions),
