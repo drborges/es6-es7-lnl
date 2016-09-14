@@ -13,20 +13,25 @@ var options = {
   ]
 }
 
+function updateElementContent(element, content) {
+  if (element) {
+    element.textContent = content
+    element.dispatchEvent(new Event('blur'))
+  }
+}
+
 function transpileAndEvaluate(source, target, output, exceptionHandler) {
   return function(event) {
     exceptionHandler(function() {
       var transpiledCode = babel.transform(source.textContent, options).code
 
       if (target) {
-        target.textContent = transpiledCode
-        target.dispatchEvent(new Event('blur'))
+        updateElementContent(target, transpiledCode)
       }
 
       if (output) {
         var evaluationResult = JSON.stringify(eval(transpiledCode.replace('use strict', '')))
-        output.textContent = "> " + evaluationResult
-        output.dispatchEvent(new Event('blur'))
+        updateElementContent(output, "> " + evaluationResult)
       }
     })
   }
@@ -50,7 +55,7 @@ module.exports = function(options) {
 
         source.addEventListener('blur', eventHandlers[e.index]['blur'])
         if (output) {
-          output.textContent = "> "
+          updateElementContent(output, "> ")
           output.addEventListener('click', eventHandlers[e.index]['click'])
         }
       }
@@ -64,7 +69,8 @@ module.exports = function(options) {
         var target = repl.querySelector('pre.target code')
         var output = repl.querySelector('pre.output code')
 
-        output.textContent = "> "
+        updateElementContent(output, "> ")
+        updateElementContent(target, "")
         source.removeEventListener('blur', eventHandlers[e.index]['blur'])
         output.removeEventListener('click', eventHandlers[e.index]['click'])
       }
