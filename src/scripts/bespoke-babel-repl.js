@@ -4,12 +4,12 @@ var babel = require("babel-core")
 var options = {
   presets: [
     require("babel-preset-es2015"),
-    require("babel-preset-es2016"),
-    require("babel-preset-es2017"),
+    
     require("babel-preset-stage-0"),
   ],
   plugins: [
     require("babel-plugin-transform-async-to-generator"),
+    require("babel-plugin-transform-decorators-legacy").default,
   ]
 }
 
