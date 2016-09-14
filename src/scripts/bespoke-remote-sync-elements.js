@@ -13,7 +13,7 @@ function syncElementToFirebase(element, remoteSyncRef) {
       }
     }
 
-    window.addEventListener('load', updateRef(elementRef, element))
+    updateRef(elementRef, element)()
     element.addEventListener('keyup', updateRef(elementRef, element))
     element.addEventListener('blur', updateRef(elementRef, element))
   }
