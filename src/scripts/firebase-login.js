@@ -16,6 +16,7 @@ function handleLoginError(firebase) {
       return login(firebase).catch(handleLoginError(firebase))
     } else {
       alert("Was not able to initialize deck for the presenter.")
+      location.href = 'https://drborges.github.io/es6-es7-lnl'
     }
   }
 }
