@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>ES6 + ES7 = Awesomeness</title>
+    <link rel="stylesheet" type="text/css" href="build/build.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="snackbar hidden"></div>
+    <div class="presence-counter"><span class="counter">0</span><span>Users</span></div>
+    <article>
+      <section>
+        <h1>ES6 + ES7 = Awesomeness</h1>
+      </section>
+      <section>
+        <h2>Before we start...</h2>
+        <h3>Did you know:</h3>
+        <ul>
+          <li><i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="http://www.ecma-international.org/memento/TC39.htm">ECMAScript</a> != Javascript?</li>
+          <li>Harmony = ES6 = ES2015?</li>
+          <li>ES7 = ES.Next = ES2016?</li>
+          <li><i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://remysharp.com/2010/10/08/what-is-a-polyfill">Polyfills</a> provide support to features not yet available in browsers?</li>
+          <li><i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://scotch.io/tutorials/javascript-transpilers-what-they-are-why-we-need-them">Transpilers</a> are compilers with a fancy name?</li>
+        </ul>
+      </section>
+      <section>
+        <h2><i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://babeljs.io">Babel</a> Transpiler</h2>
+        <h3>babel.transform(ES6 / ES7) => ES5 </h3>
+        <div class="repl">
+          <pre id="babel-repl-source" class="source remote-highlights"><code id="babel-repl-code" contenteditable="true" class="language-javascript remote-sync">let hello = (name) => `Hello ${name}`
+hello('World')</code></pre>
+          <pre id="babel-repl-target" class="target remote-highlights"><code id="babel-repl-target-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="babel-repl-output" class="output remote-highlights"><code id="babel-repl-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Warm up</h2>
+        <h3>Probably stuff you already know...</h3>
+        <ul>
+          <li>Improved String API</li>
+          <li>Object literal initialization</li>
+          <li>Class and Class Expressions</li>
+          <li><i><b>var</b></i> vs <i><b>let</b></i> vs <i><b>const</b></i></li>
+          <li>Arrow functions</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Improved <i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/">String</a> API</h2>
+        <h3>startsWith, endsWith, repeat, string templates...</h3>
+        <div class="repl">
+          <pre id="string-api-source" class="source remote-highlights"><code id="string-api-code" contenteditable="true" class="language-javascript remote-sync remote-highlights">const message = "Well, hello!";
+message.startsWith('Well, ');</code></pre>
+          <pre id="string-api-output" class="output remote-highlights"><code id="string-api-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Object literal initialization</h2>
+        <h3>Shorthands that save you some typing...</h3>
+        <div class="repl">
+          <pre id="object-literal-source" class="source remote-highlights"><code id="object-literal-code" contenteditable="true" class="language-javascript remote-sync remote-highlights">let name = 'Borges'
+let age = 30
+let person = { name: name, age: age }
+person</code></pre>
+          <pre id="object-literal-output" class="output remote-highlights"><code id="object-literal-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Class and Class Expressions</h2>
+        <h3>Because every other language has it?</h3>
+        <div class="repl">
+          <pre id="classes-source" class="source remote-highlights"><code id="classes-code" contenteditable="true" class="language-javascript remote-sync remote-highlights">class User {
+  constructor(name='guest') {
+    this.name = name
+  }
+  
+  greet(someone, message='Hi') {
+    return `${this.name}: ${message} ${someone}!`
+  }
+}
+new User('Diego').greet('Ben')</code></pre>
+          <pre id="classes-output" class="output remote-highlights"><code id="classes-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2><b>var</b> vs <b>let</b> vs <b>const</b></h2>
+        <h3>stating the obvious</h3>
+        <div class="repl">
+          <pre id="stating-the-obvious-source" class="source remote-highlights"><code id="stating-the-obvious-code" contenteditable="true" class="language-javascript remote-sync remote-highlights">const age = 30
+// age += 1</code></pre>
+          <pre id="stating-the-obvious-output" class="output remote-highlights"><code id="stating-the-obvious-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2><b>var</b> vs <b>let</b></h2>
+        <h3>It's all about scopes</h3>
+        <div class="repl">
+          <pre id="all-about-scopes-source" class="source remote-highlights"><code id="all-about-scopes-code" contenteditable="true" class="language-javascript remote-sync remote-highlights">var birthday = true
+if (birthday) {
+  var age = 30
+}
+age</code></pre>
+          <pre id="all-about-scopes-output" class="output remote-highlights"><code id="all-about-scopes-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2><b>var</b> vs <b>let</b></h2>
+        <h3>Hoisting</h3>
+        <blockquote>
+          <p>Because variable declarations (and declarations in general) are processed before any code is executed, declaring a variable anywhere in the code is equivalent to declaring it at the top. This also means that a variable can appear to be used before it's declared. This behavior is called "hoisting", as it appears that the variable declaration is moved to the top of the function or global code.</p>
+          <cite><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/var#var_hoisting">developer.mozilla.org</a><i aria-hidden="true" class="fa fa-external-link"></i></cite>
+        </blockquote>
+      </section>
+      <section>
+        <h2>Hoisting</h2>
+        <h3>The Problem</h3>
+        <div class="repl">
+          <pre id="hoisting-the-problem-source" class="source remote-highlights"><code id="hoisting-the-problem-code" contenteditable="true" class="language-javascript remote-sync remote-highlights">for (var i = 0; i < 3; i++) {
+  setTimeout(function() {
+    console.log('item:', i);
+  }, 1000);
+}
+i</code></pre>
+          <pre id="hoisting-the-problem-output" class="output remote-highlights"><code id="hoisting-the-problem-output-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="hoisting-the-problem-logger" class="remote-highlights"><code id="hoisting-the-problem-logger-code" class="logger language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Hoisting</h2>
+        <h3>Workaround: <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Glossary/function">IIFE</a><i class="fa fa-external-link" aria-hidden="true"></i></h3>
+        <div class="repl">
+          <pre id="hoisting-a-solution-source" class="source remote-highlights"><code id="hoisting-a-solution-code" contenteditable="true" class="language-javascript remote-sync remote-highlights">for (var i = 0; i < 3; i++) {
+  (function() {
+    var index = i
+    setTimeout(function() {
+      console.log('item', index);
+    }, 1000);
+  })()
+}
+i</code></pre>
+          <pre id="hoisting-a-solution-output" class="output remote-highlights"><code id="hoisting-a-solution-output-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="hoisting-a-solution-logger" class="remote-highlights"><code id="hoisting-a-solution-logger-code" class="logger language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Hoisting</h2>
+        <h3>The solution</h3>
+        <div class="repl">
+          <pre id="a-better-solution-source" class="source remote-highlights"><code id="a-better-solution-code" contenteditable="true" class="language-javascript remote-sync">for (let i = 0; i < 3; i++) {
+  setTimeout(function() {
+    console.log('item:', i);
+  }, 1000);
+}
+// i</code></pre>
+          <pre id="a-better-solution-output" class="output remote-highlights"><code id="a-better-solution-output-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="a-better-solution-logger" class="remote-highlights"><code id="a-better-solution-logger-code" class="logger language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Arrow Function</h2>
+        <h3>(a, b) => a + b</h3>
+        <div class="repl">
+          <pre id="arrow-function-source" class="source remote-highlights"><code id="arrow-function-code" contenteditable="true" class="language-javascript remote-sync">[1, 2, 3].map(function(n) { return n ** 3 })</code></pre>
+          <pre id="arrow-function-target" class="target remote-highlights"><code id="arrow-function-target-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="arrow-function-output" class="output remote-highlights"><code id="arrow-function-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Arrow Function</h2>
+        <h3>Lexical "this": <b>self</b> is no more...</h3>
+        <div class="repl">
+          <pre id="arrow-function-before-source" class="source remote-highlights"><code id="arrow-function-before-code" contenteditable="true" class="language-javascript remote-sync">var project = {
+  taxRate: 1.2,
+  items: [10, 20, 3.5],
+  cost() {
+    return this.items.reduce(function(sum, item) {
+      return sum + (item * this.taxRate)
+    })
+  }
+}
+project.cost()</code></pre>
+          <pre id="arrow-function-before-output" class="output remote-highlights"><code id="arrow-function-before-output-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="arrow-function-before-logger" class="remote-highlights"><code id="arrow-function-before-logger-code" class="logger language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Arrow Function</h2>
+        <h3>Lexical "this": <b>self</b> is no more...</h3>
+        <div class="repl">
+          <pre id="arrow-function-after-source" class="source remote-highlights"><code id="arrow-function-after-code" contenteditable="true" class="language-javascript remote-sync">var project = {
+  taxRate: 1.2,
+  items: [10, 20, 3.5],
+  cost() {
+    return this.items.reduce((sum, item) => sum + (item * this.taxRate))
+  }
+}
+project.cost()</code></pre>
+          <pre id="arrow-function-after-output" class="output remote-highlights"><code id="arrow-function-after-output-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="arrow-function-after-logger" class="remote-highlights"><code id="arrow-function-after-logger-code" class="logger language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Lets get serious, now...</h2>
+        <h3></h3>
+        <ul>
+          <li>For .. of</li>
+          <li>Spread Operator</li>
+          <li>Rest Operator</li>
+          <li>Simulating Named Parameters</li>
+          <li>Generators</li>
+          <li>Async functions</li>
+          <li>Decorators</li>
+        </ul>
+      </section>
+      <section>
+        <h2><b>For .. of</b></h2>
+        <h3>a proper <b>for .. in</b> loop</h3>
+        <div class="repl">
+          <pre id="for-of-source" class="source remote-highlights"><code id="for-of-code" contenteditable="true" class="language-javascript remote-sync">let items = [1, 2, 3]
+for (let item of items) {
+  console.log(item)
+}</code></pre>
+          <pre id="for-of-output" class="output remote-highlights"><code id="for-of-output-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="for-of-logger" class="remote-highlights"><code id="for-of-logger-code" class="logger language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Spread Operator</h2>
+        <h3>varargs with lasers <3</h3>
+        <div class="repl">
+          <pre id="spread-operator-source" class="source remote-highlights"><code id="spread-operator-code" contenteditable="true" class="language-javascript remote-sync">let a = [1, 2, 3]
+let b = [...a, 4]
+b</code></pre>
+          <pre id="spread-operator-output" class="output remote-highlights"><code id="spread-operator-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Spread Operator</h2>
+        <h3>Works on objects too!</h3>
+        <div class="repl">
+          <pre id="spread-operator-on-objects-source" class="source remote-highlights"><code id="spread-operator-on-objects-code" contenteditable="true" class="language-javascript remote-sync">let person = { name: 'Borges', email: 'drborges.cic@gmail.com' }
+let user = { ...person, name: 'diego', login: 'diego.borges' }
+user</code></pre>
+          <pre id="spread-operator-on-objects-output" class="output remote-highlights"><code id="spread-operator-on-objects-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Rest Operator</h2>
+        <h3>Destructuring to construct</h3>
+        <div class="repl">
+          <pre id="rest-operator-source" class="source remote-highlights"><code id="rest-operator-code" contenteditable="true" class="language-javascript remote-sync">let [ head, ...tail ] = [1, 2, 3, 4];
+tail
+// let { name } = { name: 'Borges', age: 30 }
+// new Date(...[2015, 1, 1]);</code></pre>
+          <pre id="rest-operator-output" class="output remote-highlights"><code id="rest-operator-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Rest Operator</h2>
+        <h3>Simulating ruby named parameters</h3>
+        <div class="repl">
+          <pre id="simulating-ruby-named-parameters-source" class="source remote-highlights"><code id="simulating-ruby-named-parameters-code" contenteditable="true" class="language-javascript remote-sync">function greet({ person, message } = { person: 'Guest', message: 'Hello' }) {
+  return `${message}, ${person}!`
+}
+greet({ person: 'Bruno', message: 'Hi' })</code></pre>
+          <pre id="simulating-ruby-named-parameters-output" class="output remote-highlights"><code id="simulating-ruby-named-parameters-output-code" class="language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Generators</h2>
+        <h3>The foundation for iterators</h3>
+        <div class="repl">
+          <pre id="generators-source" class="source remote-highlights"><code id="generators-code" contenteditable="true" class="language-javascript remote-sync">function *integers() {
+  let i = 0
+  while (true) {
+    yield i++
+  }
+}
+let iterator = integers()
+iterator.next().value</code></pre>
+          <pre id="generators-output" class="output remote-highlights"><code id="generators-output-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="generators-output-logger" class="remote-highlights"><code id="generators-output-logger-code" class="logger language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Async functions</h2>
+        <h3>I Promise, it feels like imperative programming</h3>
+        <div class="repl">
+          <pre id="async-func-source" class="source remote-highlights"><code id="async-func-code" contenteditable="true" class="language-javascript remote-sync">async function fetchGithubOrgs() {
+  let resp = await fetch('https://api.github.com/users/drborges/repos')
+  let repos = await resp.json()
+  return repos.map(r => r.name)
+}
+fetchGithubOrgs().then((reposNames) => console.log(reposNames.join("\n")))</code></pre>
+          <pre id="async-func-output" class="output remote-highlights"><code id="async-func-output-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="async-func-logger" class="remote-highlights"><code id="async-func-logger-code" class="logger language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section>
+        <h2>Decorators</h2>
+        <h3>Currently disabled on <i class="fa fa-external-link" aria-hidden="true"></i><a href="https://babeljs.io/docs/plugins/syntax-decorators">Babel 6</a></h3>
+        <div class="repl">
+          <pre id="decorators-source" class="source remote-highlights"><code id="decorators-code" contenteditable="true" class="language-javascript remote-sync">function Testable (target) { target.isTestable = true }
+@Testable
+class Authenticator {}
+Authenticator.isTestable</code></pre>
+          <pre id="decorators-output" class="output remote-highlights"><code id="decorators-output-code" class="language-javascript remote-sync"></code></pre>
+          <pre id="decorators-output-logger" class="remote-highlights"><code id="decorators-output-logger-code" class="logger language-javascript remote-sync"></code></pre>
+        </div>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Questions?</h2>
+        <h3>Source code at <i class="fa fa-external-link" aria-hidden="true"></i><a target="_blank" href="https://github.com/drborges/es6-es7-lnl">github.com/drborges</a></h3>
+      </section>
+    </article>
+    <script src="build/build.js"></script>
+  </body>
+</html>
